@@ -15,8 +15,27 @@
     </style>
 </head>
 <body>
-    <a rel="ar" href="vangogh-text.usdz">
-        <img src="dezoomify-result (3).jpg">
-    </a>
+    <a id="ar-link">
+        <img src="dezoomify-result (3).jpg"
+    a>
+
+    <script>
+        // Detectar dispositivo e configurar link para AR
+        const arLink = document.getElementById('ar-link');
+        const userAgent = navigator.userAgent;
+
+        if (/iPhone|iPad|Macintosh/i.test(userAgent)) {
+            // iOS: usa arquivo USDZ
+            arLink.setAttribute('rel', 'ar');
+            arLink.setAttribute('href', 'vangogh-text.usdz');
+        } else if (/Android/i.test(userAgent)) {
+            // Android: usa arquivo GLB
+            arLink.setAttribute('href', 'vangogh-text.glb');
+        } else {
+            // Outros dispositivos: link para download ou mensagem
+            arLink.setAttribute('href', '#');
+            arLink.textContent = 'seu celular não tem suporte';
+        }
+    </script>
 </body>
 </html>
