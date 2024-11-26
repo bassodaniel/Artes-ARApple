@@ -13,16 +13,46 @@
             margin-bottom: 10px;
         }
     </style>
+    <script>
+        // Função para detectar o sistema operacional
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Detecta iOS
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+            // Detecta Android
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+            // Outros dispositivos
+            return "other";
+        }
+
+        // Redireciona para a experiência AR apropriada
+        function openAR() {
+            const device = detectDevice();
+
+            if (device === "iOS") {
+                // Link para iOS (USDZ)
+                window.location.href = "vangogh-text.usdz";
+            } else if (device === "Android") {
+                // Intent para Scene Viewer no Android
+                window.location.href = "intent://arvr.google.com/scene-viewer/1.1?file=https://github.com/bassodaniel/Artes-ARApple/raw/refs/heads/main/vangogh-text.glb#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;";
+            } else {
+                // Fallback para navegadores não compatíveis
+                alert("seu celular nao tem suporte");
+            }
+        }
+    </script>
 </head>
 <body>
-    <model-viewer 
-        src="vangogh-text.glb" 
-        ios-src="vangogh-text.usdz"  
-        poster="dezoomify-result (3).jpg"
-        camera-controls 
-        shadow-intensity="1" 
-        auto-rotate 
-        ar>
-    </model-viewer>
+    <h1>Experiência AR Van Gogh</h1>
+
+    <!-- Imagem clicável que chama a função openAR -->
+    <a href="#" onclick="openAR()">
+        <img src="dezoomify-result (3).jpg" alt="Van Gogh">
+    </a>
 </body>
 </html>
