@@ -16,21 +16,24 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            const arLink = document.getElementById("ar-link");
+            const arImage = document.getElementById("ar-image");
 
             // Detecta o dispositivo e ajusta o link
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 // Dispositivo iOS
-                arLink.setAttribute("href", "vangogh-text.usdz");
-                arLink.setAttribute("rel", "ar"); // Necessário para Quick Look no iOS
+                arImage.setAttribute("rel", "ar");
+                arImage.setAttribute("href", "vangogh-text.usdz"); // Link para o arquivo .usdz
             } else if (/android/i.test(userAgent)) {
                 // Dispositivo Android
-                arLink.setAttribute("href", "intent://arvr.google.com/scene-viewer/1.1?file=https://github.com/bassodaniel/Artes-ARApple/raw/refs/heads/main/vangogh-text.glb#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;");
-                arLink.removeAttribute("rel"); // Remove o atributo rel, que não é necessário para Android
+                arImage.setAttribute(
+                    "href",
+                    "intent://arvr.google.com/scene-viewer/1.1?file=https://github.com/bassodaniel/Artes-ARApple/raw/refs/heads/main/vangogh-text.glb#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;"
+                );
+                arImage.removeAttribute("rel"); // Remove o rel para Android
             } else {
                 // Caso o dispositivo não seja compatível
-                arLink.setAttribute("href", "#");
-                arLink.addEventListener("click", (e) => {
+                arImage.setAttribute("href", "#");
+                arImage.addEventListener("click", (e) => {
                     e.preventDefault();
                     alert("seu celular nao tem suporte");
                 });
@@ -40,8 +43,8 @@
 </head>
 <body>
 
-    <!-- Imagem clicável que chama a função openAR -->
-    <a href="#" onclick="openAR()">
+    <!-- Imagem configurada diretamente como AR -->
+    <a id="ar-image" href="#">
         <img src="dezoomify-result (3).jpg" alt="Van Gogh">
     </a>
 </body>
